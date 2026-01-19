@@ -1,0 +1,9 @@
+[submodule "submodules/assimp"]
+	path = submodules/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "submodules/imgui"]
+	path = submodules/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "submodules/DirectX-Headers"]
+	path = submodules/DirectX-Headers
+	url = https://github.com/microsoft/DirectX-Headers.git
