@@ -38,21 +38,21 @@ bool Renderer::Initialize(ID3D12Device* device, ID3D12CommandQueue* commandQueue
     for (UINT i = 0; i < FRAME_COUNT; ++i)
     {
         // Create command allocator pool for this frame
-        m_commandAllocatorPools[i] = new GPUCommandAllocatorPool();
+        m_commandAllocatorPools[i] = std::make_unique<GPUCommandAllocatorPool>();
         if (!m_commandAllocatorPools[i]->Initialize(m_device, D3D12_COMMAND_LIST_TYPE_DIRECT, 4))
         {
             return false;
         }
 
         // Create command list for this frame
-        m_commandLists[i] = new GPUCommandList();
-        if (!m_commandLists[i]->Initialize(m_device, D3D12_COMMAND_LIST_TYPE_DIRECT, m_commandAllocatorPools[i]))
+        m_commandLists[i] = std::make_unique<GPUCommandList>();
+        if (!m_commandLists[i]->Initialize(m_device, D3D12_COMMAND_LIST_TYPE_DIRECT, m_commandAllocatorPools[i].get()))
         {
             return false;
         }
 
         // Create descriptor heap for this frame
-        m_descriptorHeaps[i] = new GPUDescriptorHeap();
+        m_descriptorHeaps[i] = std::make_unique<GPUDescriptorHeap>();
         if (!m_descriptorHeaps[i]->Initialize(m_device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 1024, true))
         {
             return false;
@@ -76,29 +76,12 @@ void Renderer::Release()
         WaitForFrameCompletion(i);
     }
 
-    // Release triple buffered resources
+    // Release triple buffered resources (unique_ptr handles cleanup automatically)
     for (UINT i = 0; i < FRAME_COUNT; ++i)
     {
-        if (m_commandLists[i])
-        {
-            m_commandLists[i]->Release();
-            delete m_commandLists[i];
-            m_commandLists[i] = nullptr;
-        }
-
-        if (m_commandAllocatorPools[i])
-        {
-            m_commandAllocatorPools[i]->Release();
-            delete m_commandAllocatorPools[i];
-            m_commandAllocatorPools[i] = nullptr;
-        }
-
-        if (m_descriptorHeaps[i])
-        {
-            m_descriptorHeaps[i]->Release();
-            delete m_descriptorHeaps[i];
-            m_descriptorHeaps[i] = nullptr;
-        }
+        m_commandLists[i].reset();
+        m_commandAllocatorPools[i].reset();
+        m_descriptorHeaps[i].reset();
     }
 
     // Release synchronization objects
@@ -127,7 +110,7 @@ void Renderer::BeginFrame()
     WaitForFrameCompletion(m_currentFrameIndex);
 
     // Get the current frame's resources
-    GPUCommandList* commandList = m_commandLists[m_currentFrameIndex];
+    GPUCommandList* commandList = GetCurrentCommandList();
     assert(commandList);
 
     // Start a new command list for this frame
@@ -150,7 +133,7 @@ void Renderer::BeginFrame()
 
 void Renderer::ClearRenderTarget()
 {
-    GPUCommandList* commandList = m_commandLists[m_currentFrameIndex];
+    GPUCommandList* commandList = GetCurrentCommandList();
     assert(commandList);
     assert(commandList->GetCommandList());
 
@@ -180,7 +163,7 @@ void Renderer::EndFrame()
 {
     assert(m_isInitialized);
 
-    GPUCommandList* commandList = m_commandLists[m_currentFrameIndex];
+    GPUCommandList* commandList = GetCurrentCommandList();
     assert(commandList);
 
     // Close the command list
@@ -206,7 +189,7 @@ void Renderer::SetRenderTarget(D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle, D3D12_CPU_
     m_currentRTV = rtvHandle;
     m_currentDSV = dsvHandle;
 
-    GPUCommandList* commandList = m_commandLists[m_currentFrameIndex];
+    GPUCommandList* commandList = GetCurrentCommandList();
     assert(commandList);
     assert(commandList->GetCommandList());
 

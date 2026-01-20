@@ -1,7 +1,6 @@
 #pragma once
 
 #include "GraphicsAPICommon.h"
-#include <dxgi1_4.h>
 
 class GPUSwapChain
 {

@@ -46,8 +46,7 @@ bool GPUSwapChain::Initialize(ID3D12Device* device, ID3D12CommandQueue* commandQ
 
     if (FAILED(hr))
     {
-        m_dxgiFactory->Release();
-        m_dxgiFactory = nullptr;
+        Release();
         return false;
     }
 
@@ -57,8 +56,7 @@ bool GPUSwapChain::Initialize(ID3D12Device* device, ID3D12CommandQueue* commandQ
 
     if (FAILED(hr))
     {
-        m_dxgiFactory->Release();
-        m_dxgiFactory = nullptr;
+        Release();
         return false;
     }
 
@@ -71,10 +69,7 @@ bool GPUSwapChain::Initialize(ID3D12Device* device, ID3D12CommandQueue* commandQ
     hr = m_device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&m_rtvDescriptorHeap));
     if (FAILED(hr))
     {
-        m_swapChain->Release();
-        m_swapChain = nullptr;
-        m_dxgiFactory->Release();
-        m_dxgiFactory = nullptr;
+        Release();
         return false;
     }
 
@@ -87,12 +82,7 @@ bool GPUSwapChain::Initialize(ID3D12Device* device, ID3D12CommandQueue* commandQ
     hr = m_device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&m_dsvDescriptorHeap));
     if (FAILED(hr))
     {
-        m_rtvDescriptorHeap->Release();
-        m_rtvDescriptorHeap = nullptr;
-        m_swapChain->Release();
-        m_swapChain = nullptr;
-        m_dxgiFactory->Release();
-        m_dxgiFactory = nullptr;
+        Release();
         return false;
     }
 

@@ -5,6 +5,7 @@
 - You are making a game engine with focus on rendering features and performance.
 - Prefer modern C++ features and idioms where appropriate.
 - Prefer assert and assertm for error checking instead of exceptions and if checks at the start of the file. However, use if checks in situations where recovery is possible.
+- Avoid using raw pointers; prefer smart pointers (e.g., `std::unique_ptr`, `std::shared_ptr`) for memory management.
 
 ## Code Style
 - Member variables should be prefixed with `m_`.

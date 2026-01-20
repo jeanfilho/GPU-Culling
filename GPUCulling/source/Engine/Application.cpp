@@ -26,11 +26,10 @@ void Application::Startup(HWND hwnd)
     assert(SUCCEEDED(hr) && m_commandQueue);
 
     // Create swap chain
-    m_swapChain = new GPUSwapChain();
+    m_swapChain = std::make_unique<GPUSwapChain>();
     if (!m_swapChain->Initialize(device, m_commandQueue, hwnd, m_width, m_height))
     {
-        delete m_swapChain;
-        m_swapChain = nullptr;
+        m_swapChain.reset();
         m_commandQueue->Release();
         m_commandQueue = nullptr;
         m_gpuDevice.Release();
@@ -38,15 +37,11 @@ void Application::Startup(HWND hwnd)
     }
 
     // Create renderer
-    m_renderer = new Renderer();
+    m_renderer = std::make_unique<Renderer>();
     if (!m_renderer->Initialize(device, m_commandQueue))
     {
-        m_renderer->Release();
-        delete m_renderer;
-        m_renderer = nullptr;
-        m_swapChain->Release();
-        delete m_swapChain;
-        m_swapChain = nullptr;
+        m_renderer.reset();
+        m_swapChain.reset();
         m_commandQueue->Release();
         m_commandQueue = nullptr;
         m_gpuDevice.Release();
@@ -59,19 +54,8 @@ void Application::Startup(HWND hwnd)
 
 void Application::Shutdown()
 {
-    if (m_renderer)
-    {
-        m_renderer->Release();
-        delete m_renderer;
-        m_renderer = nullptr;
-    }
-
-    if (m_swapChain)
-    {
-        m_swapChain->Release();
-        delete m_swapChain;
-        m_swapChain = nullptr;
-    }
+    m_renderer.reset();
+    m_swapChain.reset();
 
     if (m_commandQueue)
     {

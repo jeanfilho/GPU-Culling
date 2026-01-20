@@ -3,7 +3,7 @@
 #include "Graphics/GPUDevice.h"
 #include "Graphics/GPUSwapChain.h"
 #include "Renderer.h"
-#include <windows.h>
+#include <memory>
 
 class Application
 {
@@ -18,8 +18,8 @@ public:
 private:
     GPUDevice m_gpuDevice;
     ID3D12CommandQueue* m_commandQueue = nullptr;
-    GPUSwapChain* m_swapChain = nullptr;
-    Renderer* m_renderer = nullptr;
+    std::unique_ptr<GPUSwapChain> m_swapChain;
+    std::unique_ptr<Renderer> m_renderer;
 
     HWND m_hwnd = nullptr;
     UINT m_width = 0;

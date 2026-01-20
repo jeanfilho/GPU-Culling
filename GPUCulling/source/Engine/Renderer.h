@@ -6,6 +6,8 @@
 #include "Graphics/GPUCommandAllocatorPool.h"
 #include "Graphics/GPUDescriptorHeap.h"
 #include <DirectXMath.h>
+#include <memory>
+#include <array>
 
 using namespace DirectX;
 
@@ -36,8 +38,8 @@ public:
     void SetClearColor(float r, float g, float b, float a);
 
     // Accessors
-    GPUCommandList* GetCommandList() const { return m_commandLists[m_currentFrameIndex]; }
-    GPUDescriptorHeap* GetDescriptorHeap(UINT frameIndex) const { return m_descriptorHeaps[frameIndex]; }
+    GPUCommandList* GetCurrentCommandList() const { return m_commandLists[m_currentFrameIndex].get(); }
+    GPUDescriptorHeap* GetDescriptorHeap(UINT frameIndex) const { return m_descriptorHeaps[frameIndex].get(); }
     UINT GetCurrentFrameIndex() const { return m_currentFrameIndex; }
 
 private:
@@ -53,9 +55,9 @@ private:
     ID3D12Fence* m_fence = nullptr;
     HANDLE m_fenceEvent = nullptr;
 
-    GPUCommandList* m_commandLists[FRAME_COUNT] = {};
-    GPUCommandAllocatorPool* m_commandAllocatorPools[FRAME_COUNT] = {};
-    GPUDescriptorHeap* m_descriptorHeaps[FRAME_COUNT] = {};
+    std::array<std::unique_ptr<GPUCommandList>, FRAME_COUNT> m_commandLists;
+    std::array<std::unique_ptr<GPUCommandAllocatorPool>, FRAME_COUNT> m_commandAllocatorPools;
+    std::array<std::unique_ptr<GPUDescriptorHeap>, FRAME_COUNT> m_descriptorHeaps;
 
     // Frame synchronization
     uint64_t m_fenceValues[FRAME_COUNT] = {};
