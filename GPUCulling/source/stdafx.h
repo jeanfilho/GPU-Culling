@@ -7,7 +7,11 @@
 #include <array>
 #include <string>
 #include <iostream>
+#include <algorithm>
+#include <filesystem>
+#include <limits>
 
+#include <cctype>
 #include <cstdint>
 #include <cassert>
 #include <cstdlib>

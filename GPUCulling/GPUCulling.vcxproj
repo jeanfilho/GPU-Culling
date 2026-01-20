@@ -19,24 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\Engine\Application.cpp" />
-    <ClCompile Include="..\source\Graphics\GPUCommandAllocatorPool.cpp" />
-    <ClCompile Include="..\source\Graphics\GPUCommandQueue.cpp" />
-    <ClCompile Include="..\source\Graphics\GPUDevice.cpp" />
-    <ClCompile Include="..\source\IO\ModelLoader.cpp" />
-    <ClCompile Include="..\source\Main.cpp" />
-    <ClCompile Include="..\source\stdafx.cpp" />
-    <ClCompile Include="..\source\System\SystemWindow.cpp" />
+    <ClCompile Include="source\Engine\Application.cpp" />
+    <ClCompile Include="source\Graphics\GPUCommandAllocatorPool.cpp" />
+    <ClCompile Include="source\Graphics\GPUCommandQueue.cpp" />
+    <ClCompile Include="source\Graphics\GPUDevice.cpp" />
+    <ClCompile Include="source\IO\ModelLoader.cpp" />
+    <ClCompile Include="source\Main.cpp" />
+    <ClCompile Include="source\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\System\SystemWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\Engine\Application.h" />
-    <ClInclude Include="..\source\Graphics\GPUCommandAllocatorPool.h" />
-    <ClInclude Include="..\source\Graphics\GPUCommandQueue.h" />
-    <ClInclude Include="..\source\Graphics\GPUDevice.h" />
-    <ClInclude Include="..\source\Graphics\GraphicsAPICommon.h" />
-    <ClInclude Include="..\source\IO\ModelLoader.h" />
-    <ClInclude Include="..\source\stdafx.h" />
-    <ClInclude Include="..\source\System\SystemWindow.h" />
+    <ClInclude Include="source\Engine\Application.h" />
+    <ClInclude Include="source\Graphics\GPUCommandAllocatorPool.h" />
+    <ClInclude Include="source\Graphics\GPUCommandQueue.h" />
+    <ClInclude Include="source\Graphics\GPUDevice.h" />
+    <ClInclude Include="source\Graphics\GraphicsAPICommon.h" />
+    <ClInclude Include="source\IO\ModelLoader.h" />
+    <ClInclude Include="source\stdafx.h" />
+    <ClInclude Include="source\System\SystemWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GPUCulling\CopyAssimp.ps1" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -90,15 +98,23 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(SolutionDir)..\submodules\assimp\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>$(SolutionDir)..\submodules\assimp\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)source;$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,11 +128,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)source;$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,17 +144,20 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;ASSIMP_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)source;$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>powershell.exe -ExecutionPolicy Bypass -File $(SolutionDir)..\scripts\CopyAssimp.ps1 -OutDir $(OutDir) -SolutionDir $(SolutionDir) -Configuration $(Configuration)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -146,17 +165,20 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;ASSIMP_DLL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)source;$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>powershell.exe -ExecutionPolicy Bypass -File $(SolutionDir)..\scripts\CopyAssimp.ps1 -OutDir $(OutDir) -SolutionDir $(SolutionDir) -Configuration $(Configuration)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

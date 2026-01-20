@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GPUDevice.h"
+#include "Graphics/GPUDevice.h"
 
 class Application
 {

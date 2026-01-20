@@ -1,11 +1,8 @@
 #include "stdafx.h"
 #include "ModelLoader.h"
+
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
-#include <algorithm>
-#include <cctype>
-#include <filesystem>
-#include <limits>
 
 std::unique_ptr<Model> ModelLoader::LoadModel(const std::string& filePath)
 {
