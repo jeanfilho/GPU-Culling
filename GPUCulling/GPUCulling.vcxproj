@@ -19,10 +19,44 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\submodules\imgui\backends\imgui_impl_dx12.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\submodules\imgui\backends\imgui_impl_win32.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\submodules\imgui\imgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\submodules\imgui\imgui_demo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\submodules\imgui\imgui_draw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\submodules\imgui\imgui_tables.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\submodules\imgui\imgui_widgets.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="source\Engine\Application.cpp" />
+    <ClCompile Include="source\Engine\Camera.cpp" />
+    <ClCompile Include="source\Engine\Renderer.cpp" />
     <ClCompile Include="source\Graphics\GPUCommandAllocatorPool.cpp" />
+    <ClCompile Include="source\Graphics\GPUCommandList.cpp" />
     <ClCompile Include="source\Graphics\GPUCommandQueue.cpp" />
+    <ClCompile Include="source\Graphics\GPUDescriptorHeap.cpp" />
     <ClCompile Include="source\Graphics\GPUDevice.cpp" />
+    <ClCompile Include="source\Graphics\GPUSwapChain.cpp" />
+    <ClCompile Include="source\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="source\IO\ModelLoader.cpp" />
     <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\stdafx.cpp">
@@ -34,17 +68,36 @@
     <ClCompile Include="source\System\SystemWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\submodules\imgui\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="..\submodules\imgui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="..\submodules\imgui\imconfig.h" />
+    <ClInclude Include="..\submodules\imgui\imgui.h" />
+    <ClInclude Include="..\submodules\imgui\imgui_internal.h" />
+    <ClInclude Include="..\submodules\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\submodules\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\submodules\imgui\imstb_truetype.h" />
     <ClInclude Include="source\Engine\Application.h" />
+    <ClInclude Include="source\Engine\Camera.h" />
+    <ClInclude Include="source\Engine\Renderer.h" />
     <ClInclude Include="source\Graphics\GPUCommandAllocatorPool.h" />
+    <ClInclude Include="source\Graphics\GPUCommandList.h" />
     <ClInclude Include="source\Graphics\GPUCommandQueue.h" />
+    <ClInclude Include="source\Graphics\GPUDescriptorHeap.h" />
     <ClInclude Include="source\Graphics\GPUDevice.h" />
+    <ClInclude Include="source\Graphics\GPUSwapChain.h" />
     <ClInclude Include="source\Graphics\GraphicsAPICommon.h" />
+    <ClInclude Include="source\ImGui\ImGuiLayer.h" />
     <ClInclude Include="source\IO\ModelLoader.h" />
     <ClInclude Include="source\stdafx.h" />
     <ClInclude Include="source\System\SystemWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\submodules\imgui\misc\debuggers\imgui.natstepfilter" />
+    <None Include=".github\copilot-instructions.md" />
     <None Include="GPUCulling\CopyAssimp.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\submodules\imgui\misc\debuggers\imgui.natvis" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -148,7 +201,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)source;$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)source;$(SolutionDir)..\submodules\imgui;$(SolutionDir)..\submodules\imgui\backends;$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -169,7 +222,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)source;$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)source;$(SolutionDir)..\submodules\imgui;$(SolutionDir)..\submodules\imgui\backends;$(SolutionDir)..\submodules\DirectXMath\Inc;$(SolutionDir)..\submodules\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

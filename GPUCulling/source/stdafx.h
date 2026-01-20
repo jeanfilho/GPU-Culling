@@ -2,6 +2,7 @@
 
 #include <d3d12.h>
 #include <dxgi.h>
+#include <dxgi1_4.h>
 
 #include <vector>
 #include <array>
@@ -10,6 +11,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <limits>
+#include <numeric>
 
 #include <cctype>
 #include <cstdint>

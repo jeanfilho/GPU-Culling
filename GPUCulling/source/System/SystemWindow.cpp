@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SystemWindow.h"
+#include <windowsx.h>
 
 LRESULT CALLBACK SystemWindow::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -10,7 +11,9 @@ LRESULT CALLBACK SystemWindow::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
         return 0;
     case WM_SIZE:
     {
-        s_App.Resize();
+        UINT width = GET_X_LPARAM(lParam);
+        UINT height = GET_Y_LPARAM(lParam);
+        s_App.Resize(width, height);
         return 0;
     }
     case WM_PAINT:
@@ -65,7 +68,7 @@ int __stdcall SystemWindow::WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
     ShowWindow(hwnd, nCmdShow);
     UpdateWindow(hwnd);
 
-    s_App.Startup();
+    s_App.Startup(hwnd);
 
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0) > 0)
