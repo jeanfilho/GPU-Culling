@@ -9,57 +9,63 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{aeb097ab-c497-4b51-a423-237ee6cf9011}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\Engine\Application.cpp">
+    <ClCompile Include="source\Engine\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\Graphics\GPUCommandAllocatorPool.cpp">
+    <ClCompile Include="source\Graphics\GPUCommandAllocatorPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\Graphics\GPUCommandQueue.cpp">
+    <ClCompile Include="source\Graphics\GPUCommandQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\Graphics\GPUDevice.cpp">
+    <ClCompile Include="source\Graphics\GPUDevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\IO\ModelLoader.cpp">
+    <ClCompile Include="source\IO\ModelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\System\SystemWindow.cpp">
+    <ClCompile Include="source\System\SystemWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\Main.cpp">
+    <ClCompile Include="source\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\stdafx.cpp">
+    <ClCompile Include="source\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\Engine\Application.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="source\System\SystemWindow.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\Graphics\GPUCommandAllocatorPool.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="source\Graphics\GPUCommandAllocatorPool.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\Graphics\GPUCommandQueue.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="source\Graphics\GPUCommandQueue.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\Graphics\GPUDevice.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="source\Graphics\GPUDevice.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\Graphics\GraphicsAPICommon.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="source\Graphics\GraphicsAPICommon.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\IO\ModelLoader.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="source\IO\ModelLoader.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\System\SystemWindow.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="source\stdafx.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\stdafx.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="source\Engine\Application.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GPUCulling\CopyAssimp.ps1" />
   </ItemGroup>
 </Project>

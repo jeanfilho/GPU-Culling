@@ -4,6 +4,7 @@
 [submodule "submodules/imgui"]
 	path = submodules/imgui
 	url = https://github.com/ocornut/imgui.git
+	branch = docking
 [submodule "submodules/DirectX-Headers"]
 	path = submodules/DirectX-Headers
 	url = https://github.com/microsoft/DirectX-Headers.git
