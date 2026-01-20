@@ -33,7 +33,8 @@ void ImGuiLayer::Initialize(GPUDevice* device, GPUCommandQueue* commandQueue, in
         desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
         desc.NumDescriptors = srvHeapSize;
         desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-        assert(device->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&m_srvDescHeap->GetHeap())) != S_OK);
+        auto descHeap = m_srvDescHeap->GetHeap();
+        assert(device->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&descHeap)) != S_OK);
     }
 
     // Allocating SRV descriptors (for textures) is up to the application, so we provide callbacks.

@@ -12,54 +12,43 @@ void Application::Startup(HWND hwnd)
     m_height = clientRect.bottom - clientRect.top;
 
     // Initialize GPU device
-    if (!m_gpuDevice.Initialize())
-    {
-        return;
-    }
+    assert(m_gpuDevice.Initialize());
 
     ID3D12Device* device = m_gpuDevice.GetDevice();
-    if (!device)
-    {
-        return;
-    }
+    assert(device);
 
-    // Create swap chain
-    m_swapChain = new GPUSwapChain();
-    if (!m_swapChain->Initialize(device, nullptr, hwnd, m_width, m_height))
-    {
-        delete m_swapChain;
-        m_swapChain = nullptr;
-        m_gpuDevice.Release();
-        return;
-    }
-
-    // Need command queue from GPUDevice - for now create a temporary one
+    // Create command queue
     D3D12_COMMAND_QUEUE_DESC queueDesc = {};
     queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
     
-    ID3D12CommandQueue* commandQueue = nullptr;
-    HRESULT hr = device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&commandQueue));
-    if (FAILED(hr) || !commandQueue)
+    HRESULT hr = device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&m_commandQueue));
+    assert(SUCCEEDED(hr) && m_commandQueue);
+
+    // Create swap chain
+    m_swapChain = new GPUSwapChain();
+    if (!m_swapChain->Initialize(device, m_commandQueue, hwnd, m_width, m_height))
     {
-        m_swapChain->Release();
         delete m_swapChain;
         m_swapChain = nullptr;
+        m_commandQueue->Release();
+        m_commandQueue = nullptr;
         m_gpuDevice.Release();
         return;
     }
 
     // Create renderer
     m_renderer = new Renderer();
-    if (!m_renderer->Initialize(device, commandQueue))
+    if (!m_renderer->Initialize(device, m_commandQueue))
     {
         m_renderer->Release();
         delete m_renderer;
         m_renderer = nullptr;
-        commandQueue->Release();
         m_swapChain->Release();
         delete m_swapChain;
         m_swapChain = nullptr;
+        m_commandQueue->Release();
+        m_commandQueue = nullptr;
         m_gpuDevice.Release();
         return;
     }
@@ -82,6 +71,12 @@ void Application::Shutdown()
         m_swapChain->Release();
         delete m_swapChain;
         m_swapChain = nullptr;
+    }
+
+    if (m_commandQueue)
+    {
+        m_commandQueue->Release();
+        m_commandQueue = nullptr;
     }
 
     m_gpuDevice.Release();

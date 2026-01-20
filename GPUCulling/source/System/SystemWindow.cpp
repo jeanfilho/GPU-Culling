@@ -16,19 +16,6 @@ LRESULT CALLBACK SystemWindow::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
         s_App.Resize(width, height);
         return 0;
     }
-    case WM_PAINT:
-    {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hwnd, &ps);
-        FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-        const wchar_t text[] = L"GPU Culling - Window";
-        TextOutW(hdc, 10, 10, text, (int)wcslen(text));
-        EndPaint(hwnd, &ps);
-
-        s_App.Simulate();
-        s_App.Present();
-        return 0;
-    }
     }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
@@ -70,11 +57,18 @@ int __stdcall SystemWindow::WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
 
     s_App.Startup(hwnd);
 
-    MSG msg;
-    while (GetMessage(&msg, NULL, 0, 0) > 0)
+    MSG msg = {};
+    while (msg.message != WM_QUIT)
     {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+
+        s_App.Simulate();
+        s_App.Present();
+
     }
 
     s_App.Shutdown();

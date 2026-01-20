@@ -17,6 +17,7 @@ public:
 
 private:
     GPUDevice m_gpuDevice;
+    ID3D12CommandQueue* m_commandQueue = nullptr;
     GPUSwapChain* m_swapChain = nullptr;
     Renderer* m_renderer = nullptr;
 

@@ -8,10 +8,7 @@ GPUSwapChain::~GPUSwapChain()
 
 bool GPUSwapChain::Initialize(ID3D12Device* device, ID3D12CommandQueue* commandQueue, HWND hwnd, UINT width, UINT height)
 {
-    if (!device || !commandQueue || !hwnd || width == 0 || height == 0)
-    {
-        return false;
-    }
+    assertm(device && commandQueue && hwnd && width != 0 && height != 0, "Invalid parameters passed to swapchain initialization");
 
     m_device = device;
     m_commandQueue = commandQueue;
