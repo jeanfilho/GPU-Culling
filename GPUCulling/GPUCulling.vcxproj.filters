@@ -9,60 +9,57 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{e13f56e0-9136-4c9c-9597-8847a5228dc7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\System">
-      <UniqueIdentifier>{b31de2bc-1a8f-476a-8ab3-25c28bc25e8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Engine">
-      <UniqueIdentifier>{194f727c-da1b-4caa-a6de-f8cf8d7f360c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="..\source\Engine\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GPUDevice.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="GPUCommandQueue.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="GPUCommandAllocatorPool.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="..\source\Graphics\GPUCommandAllocatorPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SystemWindow.cpp">
-      <Filter>Source Files\System</Filter>
+    <ClCompile Include="..\source\Graphics\GPUCommandQueue.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source Files\Engine</Filter>
+    <ClCompile Include="..\source\Graphics\GPUDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\IO\ModelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\System\SystemWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\stdafx.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="..\source\Engine\Application.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsAPICommon.h">
-      <Filter>Source Files\Graphics</Filter>
+    <ClInclude Include="..\source\Graphics\GPUCommandAllocatorPool.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="SystemWindow.h">
-      <Filter>Source Files\System</Filter>
+    <ClInclude Include="..\source\Graphics\GPUCommandQueue.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Source Files\Engine</Filter>
+    <ClInclude Include="..\source\Graphics\GPUDevice.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="GPUCommandAllocatorPool.h">
-      <Filter>Source Files\Graphics</Filter>
+    <ClInclude Include="..\source\Graphics\GraphicsAPICommon.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="GPUCommandQueue.h">
-      <Filter>Source Files\Graphics</Filter>
+    <ClInclude Include="..\source\IO\ModelLoader.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="GPUDevice.h">
-      <Filter>Source Files\Graphics</Filter>
+    <ClInclude Include="..\source\System\SystemWindow.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\stdafx.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

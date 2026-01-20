@@ -7,3 +7,6 @@
 [submodule "submodules/DirectX-Headers"]
 	path = submodules/DirectX-Headers
 	url = https://github.com/microsoft/DirectX-Headers.git
+[submodule "submodules/DirectXMath"]
+	path = submodules/DirectXMath
+	url = https://github.com/microsoft/DirectXMath.git
