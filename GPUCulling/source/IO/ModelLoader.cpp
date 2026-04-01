@@ -4,7 +4,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 
-std::unique_ptr<Model> ModelLoader::LoadModel(const std::string& filePath)
+std::unique_ptr<ModelData> ModelLoader::LoadModel(const std::string& filePath)
 {
     Assimp::Importer importer;
 
@@ -25,7 +25,7 @@ std::unique_ptr<Model> ModelLoader::LoadModel(const std::string& filePath)
         return nullptr;
     }
 
-    auto model = std::make_unique<Model>();
+    auto model = std::make_unique<ModelData>();
 
     ProcessNode(scene->mRootNode, scene, model.get());
 
@@ -64,7 +64,7 @@ bool ModelLoader::IsFileSupported(const std::string& filePath) const
     return false;
 }
 
-void ModelLoader::ProcessNode(aiNode* node, const aiScene* scene, Model* outModel)
+void ModelLoader::ProcessNode(aiNode* node, const aiScene* scene, ModelData* outModel)
 {
     for (uint32_t i = 0; i < node->mNumMeshes; ++i)
     {
@@ -82,15 +82,15 @@ void ModelLoader::ProcessNode(aiNode* node, const aiScene* scene, Model* outMode
     }
 }
 
-std::unique_ptr<Mesh> ModelLoader::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+std::unique_ptr<MeshData> ModelLoader::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
-    auto processedMesh = std::make_unique<Mesh>();
+    auto processedMesh = std::make_unique<MeshData>();
     processedMesh->name = mesh->mName.C_Str();
     processedMesh->materialIndex = mesh->mMaterialIndex;
 
     for (uint32_t i = 0; i < mesh->mNumVertices; ++i)
     {
-        Vertex vertex{};
+        VertexData vertex{};
 
         vertex.position = XMFLOAT3(
             mesh->mVertices[i].x,
@@ -158,9 +158,9 @@ std::unique_ptr<Mesh> ModelLoader::ProcessMesh(aiMesh* mesh, const aiScene* scen
     return processedMesh;
 }
 
-std::unique_ptr<Material> ModelLoader::ProcessMaterial(aiMaterial* material, const std::string& modelDir)
+std::unique_ptr<MaterialData> ModelLoader::ProcessMaterial(aiMaterial* material, const std::string& modelDir)
 {
-    auto processedMaterial = std::make_unique<Material>();
+    auto processedMaterial = std::make_unique<MaterialData>();
     processedMaterial->name = material->GetName().C_Str();
 
     aiColor3D diffuse(0.8f, 0.8f, 0.8f);
@@ -201,7 +201,7 @@ std::unique_ptr<Material> ModelLoader::ProcessMaterial(aiMaterial* material, con
     return processedMaterial;
 }
 
-void ModelLoader::CalculateBoundingBox(Model* outModel)
+void ModelLoader::CalculateBoundingBox(ModelData* outModel)
 {
     if (outModel->meshes.empty())
     {
@@ -231,13 +231,13 @@ void ModelLoader::CalculateBoundingBox(Model* outModel)
     outModel->boundingBoxMax = maxBounds;
 }
 
-void ModelLoader::CalculateTangentSpace(std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices)
+void ModelLoader::CalculateTangentSpace(std::vector<VertexData>& vertices, const std::vector<uint32_t>& indices)
 {
     for (size_t i = 0; i < indices.size(); i += 3)
     {
-        Vertex& v0 = vertices[indices[i]];
-        Vertex& v1 = vertices[indices[i + 1]];
-        Vertex& v2 = vertices[indices[i + 2]];
+        VertexData& v0 = vertices[indices[i]];
+        VertexData& v1 = vertices[indices[i + 1]];
+        VertexData& v2 = vertices[indices[i + 2]];
 
         XMVECTOR pos0 = XMLoadFloat3(&v0.position);
         XMVECTOR pos1 = XMLoadFloat3(&v1.position);

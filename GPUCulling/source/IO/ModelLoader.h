@@ -8,7 +8,7 @@
 
 using namespace DirectX;
 
-struct Vertex
+struct VertexData
 {
     XMFLOAT3 position;
     XMFLOAT3 normal;
@@ -17,15 +17,15 @@ struct Vertex
     XMFLOAT3 bitangent;
 };
 
-struct Mesh
+struct MeshData
 {
-    std::vector<Vertex> vertices;
+    std::vector<VertexData> vertices;
     std::vector<uint32_t> indices;
     std::string name;
     uint32_t materialIndex = 0;
 };
 
-struct Material
+struct MaterialData
 {
     std::string name;
     XMFLOAT3 diffuse = XMFLOAT3(0.8f, 0.8f, 0.8f);
@@ -37,10 +37,10 @@ struct Material
     std::string specularTexture;
 };
 
-struct Model
+struct ModelData
 {
-    std::vector<Mesh> meshes;
-    std::vector<Material> materials;
+    std::vector<MeshData> meshes;
+    std::vector<MaterialData> materials;
     XMFLOAT3 boundingBoxMin;
     XMFLOAT3 boundingBoxMax;
 };
@@ -56,13 +56,13 @@ public:
     ModelLoader(ModelLoader&&) = default;
     ModelLoader& operator=(ModelLoader&&) = default;
 
-    std::unique_ptr<Model> LoadModel(const std::string& filePath);
+    std::unique_ptr<ModelData> LoadModel(const std::string& filePath);
     bool IsFileSupported(const std::string& filePath) const;
 
 private:
-    void ProcessNode(aiNode* node, const aiScene* scene, Model* outModel);
-    std::unique_ptr<Mesh> ProcessMesh(aiMesh* mesh, const aiScene* scene);
-    std::unique_ptr<Material> ProcessMaterial(aiMaterial* material, const std::string& modelDir);
-    void CalculateBoundingBox(Model* outModel);
-    void CalculateTangentSpace(std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices);
+    void ProcessNode(aiNode* node, const aiScene* scene, ModelData* outModel);
+    std::unique_ptr<MeshData> ProcessMesh(aiMesh* mesh, const aiScene* scene);
+    std::unique_ptr<MaterialData> ProcessMaterial(aiMaterial* material, const std::string& modelDir);
+    void CalculateBoundingBox(ModelData* outModel);
+    void CalculateTangentSpace(std::vector<VertexData>& vertices, const std::vector<uint32_t>& indices);
 };
